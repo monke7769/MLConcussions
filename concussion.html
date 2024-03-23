@@ -16,16 +16,21 @@
           /*  filter: blur(5px); /* Apply a slight blur effect */
             margin: 0;
             padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .container {
             max-width: 400px; /* Adjusted max-width for a narrower form */
-            margin: 50px auto;
             padding: 20px;
-            background-color: rgba(30, 30, 50, 0.8); /* Dark blue background color */
+            background-color: rgba(30, 30, 50, 0.9); /* Dark blue background color */
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 1.0s ease;
+            flex-direction: column; /* Arrange children vertically */
+            align-items: center; /* Center items horizontally */
         }
 
         @keyframes fadeIn {
@@ -69,6 +74,7 @@
         }
 
         input[type="text"],
+        input[type="number"],
         select {
             padding: 10px;
             margin-bottom: 10px;
@@ -135,18 +141,39 @@
             background-color: #09071a;
         }
 
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            display: none;
+        }
+
+        #result-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
         #display {
             margin-top: 20px;
             font-weight: bold;
-            color: #fff; /* White text color */
+            color: #000; /* Black text color */
         }
 
         #display2 {
             font-weight: bold;
-            color: #fff; /* White text color */
+            color: #000; /* Black text color */
         }
     </style>
-</head>
 </head>
 <body>
     <div class="container">
@@ -167,11 +194,15 @@
             <label for="weight">Weight (lbs):</label>
             <input type="number" id="weight" name="weight" required>
 
-            <label for="smoke">Smoke:</label>
-            <input type="checkbox" id="smoke" name="smoke">
+            <div class="checkbox-group">
+                <label for="smoke">Smoke:</label>
+                <input type="checkbox" id="smoke" name="smoke">
+            </div>
 
-            <label for="alcohol">Alcohol:</label>
-            <input type="checkbox" id="alcohol" name="alcohol">
+            <div class="checkbox-group">
+                <label for="alcohol">Alcohol:</label>
+                <input type="checkbox" id="alcohol" name="alcohol">
+            </div>
 
             <label for="sleepHours">Sleep Hours:</label>
             <input type="number" id="sleepHours" name="sleepHours" required>
@@ -185,10 +216,14 @@
             <button type="button" onclick="login_user()">Predict Recovery</button>
         </form>
 
-        <div id="display"></div>
-        <div id="display2"></div>
+        <div id="overlay">
+            <div id="result-container">
+                <div id="display"></div>
+                <div id="display2"></div>
+                <button onclick="hideOverlay()">Close</button>
+            </div>
+        </div>
     </div>
-
     <script>
      function login_user() {
             const url = 'http://127.0.0.1:8086/api/titanic/'; // WE NEED TO CHANGE THIS URL WHEN WE MAKE THE API
