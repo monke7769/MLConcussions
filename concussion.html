@@ -7,70 +7,76 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #060636; 
+            background-image: url('https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0zNzNiYXRjaDE1LWJnLTExLmpwZw.jpg'); /* Specify the URL of your background image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Make the background image fixed */
+            background-repeat: no-repeat;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
 
         .container {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            max-width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
-            text-align: center;
             color: #333;
-            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
         }
 
         label {
-            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
         }
 
         input[type="text"],
-        input[type="number"],
-        select,
-        input[type="checkbox"] {
-            width: 100%;
+        select {
             padding: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
         }
 
         button {
-            background-color: #007bff;
-            color: #fff;
+            padding: 10px 20px;
+            background-color: #00b3ff;
+            color: white;
             border: none;
-            border-radius: 4px;
-            padding: 12px 20px;
-            font-size: 16px;
+            border-radius: 5px;
             cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
         }
 
         #display {
             margin-top: 20px;
-            font-size: 18px;
+            font-weight: bold;
+            color: #333;
         }
 
         #display2 {
-            font-size: 18px;
+            font-weight: bold;
+            color: #333;
         }
     </style>
 </head>
@@ -147,6 +153,7 @@
                 cache: 'no-cache', // Set the cache property
                 body: JSON.stringify(body)
             };
+            console.log('Data:', body);
 
             // Fetch JWT
             fetch(url, authOptions)
