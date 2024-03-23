@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concussion Recovery Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            max-width: 90%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        input[type="checkbox"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #display {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        #display2 {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Concussion Recovery Prediction</h1>
+        <form id="concussionForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="sex">Sex:</label>
+            <select id="sex" name="sex" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+
+            <label for="healTime">Heal Time (days):</label>
+            <input type="number" id="healTime" name="healTime" required>
+
+            <label for="weight">Weight (lbs):</label>
+            <input type="number" id="weight" name="weight" required>
+
+            <label for="smoke">Smoke:</label>
+            <input type="checkbox" id="smoke" name="smoke">
+
+            <label for="alcohol">Alcohol:</label>
+            <input type="checkbox" id="alcohol" name="alcohol">
+
+            <label for="sleepHours">Sleep Hours:</label>
+            <input type="number" id="sleepHours" name="sleepHours" required>
+
+            <label for="exerciseHours">Exercise Hours:</label>
+            <input type="number" id="exerciseHours" name="exerciseHours" required>
+
+            <label for="hitbox">Hitbox:</label>
+            <input type="text" id="hitbox" name="hitbox" required>
+
+            <button type="button" onclick="login_user()">Predict Recovery</button>
+        </form>
+
+        <div id="display"></div>
+        <div id="display2"></div>
+    </div>
+
+    <script>
+     function login_user() {
+            const url = 'http://127.0.0.1:8086/api/titanic/';
+
+            // Get checkbox values
+            const smokeChecked = document.getElementById("smoke").checked ? 1 : 0;
+            const alcoholChecked = document.getElementById("alcohol").checked ? 1 : 0;
+
+            // Set the body of the request to include login data from the DOM
+            const body = {
+                name: document.getElementById("name").value,
+                sex: document.getElementById("sex").value,
+                healTime: parseInt(document.getElementById("healTime").value),
+                weight: parseInt(document.getElementById("weight").value),
+                smoke: smokeChecked,
+                alcohol: alcoholChecked,
+                sleepHours: parseInt(document.getElementById("sleepHours").value),
+                exerciseHours: parseInt(document.getElementById("exerciseHours").value),
+                hitbox: document.getElementById("hitbox").value
+            };
+
+            // Change options according to Authentication requirements
+            const authOptions = {
+                mode: 'cors', // no-cors, *cors, same-origin
+                credentials: 'include', // include, same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST', // Override the method property
+                cache: 'no-cache', // Set the cache property
+                body: JSON.stringify(body)
+            };
+
+            // Fetch JWT
+            fetch(url, authOptions)
+                .then(response => {
+                    // Check if response is successful
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    // Parse the JSON content from the response
+                    return response.json();
+                })
+                .then(data => {
+                    // Now 'data' contains the parsed JSON content
+                    console.log(data);
+                    document.getElementById("display").innerHTML = "Survival Chance: " + ((1 - data[0]) * 100).toFixed(2) + "%.";
+                    document.getElementById("display2").innerHTML = "Deathrate: " + (data[0] * 100).toFixed(2) + "%.";
+                })
+                .catch(error => {
+                    // Handle errors here
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+    </script>
+</body>
+</html>
