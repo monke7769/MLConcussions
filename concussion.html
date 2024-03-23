@@ -173,6 +173,17 @@
             font-weight: bold;
             color: #000; /* Black text color */
         }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
     </style>
 </head>
 <body>
@@ -203,15 +214,15 @@
                 <label for="alcohol">Alcohol:</label>
                 <input type="checkbox" id="alcohol" name="alcohol">
             </div>
-
             <label for="sleepHours">Sleep Hours:</label>
-            <input type="number" id="sleepHours" name="sleepHours" required>
-
+            <input type="number" id="sleepHours" name="sleepHours" step="0.01" required>
+            
             <label for="exerciseHours">Exercise Hours:</label>
-            <input type="number" id="exerciseHours" name="exerciseHours" required>
-
+            <input type="number" id="exerciseHours" name="exerciseHours" step="0.01" required>
+            
             <label for="hitbox">Hitbox:</label>
-            <input type="text" id="hitbox" name="hitbox" required>
+            <input type="number" id="hitbox" name="hitbox" step="0.01" required>
+            
 
             <button type="button" onclick="login_user()">Predict Recovery</button>
         </form>
@@ -226,6 +237,7 @@
     </div>
     <script>
      function login_user() {
+        
             const url = 'http://127.0.0.1:8086/api/titanic/'; // WE NEED TO CHANGE THIS URL WHEN WE MAKE THE API
 
             // Get checkbox values
@@ -277,7 +289,30 @@
                     // Handle errors here
                     console.error('There was a problem with the fetch operation:', error);
                 });
-        }
+        
+            const form = document.getElementById("concussionForm");
+            const inputs = form.querySelectorAll("input, select");
+            let allFilled = true;
+
+            inputs.forEach(input => {
+                if (input.hasAttribute("required") && !input.value) {
+                    input.classList.add("shake");
+                    allFilled = false;
+                } else {
+                    input.classList.remove("shake");
+                }
+            });
+
+            if (!allFilled) {
+                setTimeout(() => {
+                    inputs.forEach(input => {
+                        input.classList.remove("shake");
+                    });
+                }, 500);
+
+                alert("Please fill out all required fields.");
+            }
+    }
     </script>
 </body>
 </html>
