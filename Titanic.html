@@ -1,0 +1,269 @@
+
+<html>
+<head>
+    <style>
+        html, body {
+  height: 100%;
+}
+body {
+  margin:0;
+  padding:0;
+  font-family: sans-serif;
+  background: linear-gradient(#141e30, #243b55);
+  overflow-y: auto;
+}
+
+.login-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,.5);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0,0,0,.6);
+  border-radius: 10px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.login-box h2 {
+  margin: 0 0 5px;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+}
+
+.login-box .user-box {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.login-box .user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+.login-box .user-box label {
+  position: absolute;
+  top:0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #03e9f4;
+  font-size: 12px;
+}
+
+.login-box form a {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #03e9f4;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: .5s;
+  margin-top: 40px;
+  letter-spacing: 4px
+}
+
+.login-box a:hover {
+  background: #03e9f4;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #03e9f4,
+              0 0 25px #03e9f4,
+              0 0 50px #03e9f4,
+              0 0 100px #03e9f4;
+}
+
+.login-box a span {
+  position: absolute;
+  display: block;
+}
+
+.login-box a span:nth-child(1) {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #03e9f4);
+  animation: btn-anim1 1s linear infinite;
+}
+
+@keyframes btn-anim1 {
+  0% {
+    left: -100%;
+  }
+  50%,100% {
+    left: 100%;
+  }
+}
+
+.login-box a span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #03e9f4);
+  animation: btn-anim2 1s linear infinite;
+  animation-delay: .25s
+}
+
+@keyframes btn-anim2 {
+  0% {
+    top: -100%;
+  }
+  50%,100% {
+    top: 100%;
+  }
+}
+
+.login-box a span:nth-child(3) {
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(270deg, transparent, #03e9f4);
+  animation: btn-anim3 1s linear infinite;
+  animation-delay: .5s
+}
+
+@keyframes btn-anim3 {
+  0% {
+    right: -100%;
+  }
+  50%,100% {
+    right: 100%;
+  }
+}
+
+.login-box a span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent, #03e9f4);
+  animation: btn-anim4 1s linear infinite;
+  animation-delay: .75s
+}
+
+@keyframes btn-anim4 {
+  0% {
+    bottom: -100%;
+  }
+  50%,100% {
+    bottom: 100%;
+  }
+}
+    </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Titanic: Will you survive?</h2>
+    <form id="passengerForm">
+      <div class="user-box">
+        <input type="text" name="name" required>
+        <label>Name</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="sex" required>
+        <label>Gender</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="age" required>
+        <label>Age</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="pclass" required>
+        <label>Class of Travel</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="sibsp" required>
+        <label>Number of Siblings/Spouses Aboard</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="parch" required>
+        <label>Number of Parents/Children Aboard</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="fare" required>
+        <label>Fare</label>
+      </div>
+      <div class="user-box">
+        <select name="embarked" required>
+            <option value="" disabled selected>Port of Embarkation</option>
+            <option value="Cherbourg">Cherbourg</option>
+            <option value="Southampton">Southampton</option>
+            <option value="Queenstown">Queenstown</option>
+        </select>
+      </div>
+      <div class="user-box">
+        <select name="alone" required>
+            <option value="" disabled selected>Alone?</option>
+            <option value="True">True</option>
+            <option value="False">False</option>
+        </select>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+</div>
+<script>
+  document.getElementById("passengerForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent default form submission
+      const formData = new FormData(event.target);
+      const passengerData = {};
+
+      formData.forEach(function(value, key){
+        if (!isNaN(parseInt(value))) {
+            passengerData[key] = [parseInt(value)];
+        } else if (!isNaN(parseFloat(value))) {
+            passengerData[key] = [parseFloat(value)];
+        } else if (value.toLowerCase() === "true" || value.toLowerCase() === "false") {
+            passengerData[key] = value.toLowerCase() === "true"; // boolean
+        } else if (value.toLowerCase() === "southampton") {
+            passengerData[key] = ["S"];
+        } else if (value.toLowerCase() === "queenstown") {
+          passengerData[key] = ["Q"];
+        } else if (value.toLowerCase() === "cherbourg") {
+          passengerData[key] = ["C"];
+        } else {
+            passengerData[key] = [value]; 
+        }
+        console.log(passengerData)
+    });
+    fetch('http://127.0.0.1:8086/api/titanic', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(passengerData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data); // Handle response from backend
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+});
+</script>
+</body>
+</html>

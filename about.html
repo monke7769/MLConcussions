@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>PictureIt</title>
+
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,700&display=swap" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: black;
+    }
+
+    .gallery_page {
+      margin: 0 10%;
+    }
+
+    .img_hold {
+      height: 256px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      transition: all .25s;
+      background-position: center;
+    }
+
+    .img_box {
+      height: 256px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .img {
+      height: 256px;
+      width: 100%;
+      cursor: zoom-in;
+      background-position: center;
+      background-size: cover;
+      transition: all .5s;
+      filter: saturate(25%) brightness(50%);
+    }
+
+    .img:hover {
+      transform: scale(1.3);
+      filter: saturate(100%) brightness(100%);
+    }
+
+    #lightbox {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      background: rgba(0, 0, 0, .8);
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    #lightbox img {
+      max-height: 90vh;
+      max-width: 90vw;
+    }
+
+    #closeLightbox {
+      color: #fff;
+      font-size: 20px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 9998;
+      display: none;
+    }
+
+    .download-button {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      background-color: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: none; /* Hide initially */
+    }
+
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .pagination a {
+      display: inline-block;
+      padding: 8px 16px;
+      text-decoration: none;
+      color: white;
+      background-color: #333;
+      border-radius: 5px;
+      margin-right: 5px;
+    }
+
+    .pagination a.active {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body class="sub_page">
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
+          <a class="navbar-brand" href="index.html">
+            <span>
+              PictureIt
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+              <ul class="navbar-nav  ">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html"> gallery </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="do.html"> edit </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="portfolio.html">upload</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Login.html">Login</a>
+                </li>
+              </ul>
+              <div class="user_option">
+                <a href="">
+                  <img src="images/user.png" alt="">
+                </a>
+                <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
+                  <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+
+  <!-- who section -->
+  <!-- end who section -->
+
+
+  <div class="gallery_page">
+    <div class="w3-row img_gallery" id="gallery_container">
+    </div>
+    <div id="pagination_container" class="pagination"></div>
+  </div>
+
+  <div id="lightbox">
+    <span id="closeLightbox">&times;</span>
+    <img id="lightbox_img" src="" alt="Enlarged Image">
+    <button class="download-button">Download</button>
+  </div>
+
+  <div class="overlay"></div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Update the apiUrl to the correct endpoint in your backend server
+    const apiUrl = 'http://127.0.0.1:8097/api/images/'; // Update this URL
+
+    function downloadImage(imageUrl) {
+      // Create a temporary anchor element
+      var a = document.createElement('a');
+      a.href = imageUrl;
+      a.download = 'image.jpg';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    // Get token from cookies
+    const token = getCookies()['token'];
+
+    if (token) {
+      fetch(apiUrl, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Token validation failed');
+        }
+      })
+      .then(data => {
+        const galleryContainer = $('#gallery_container');
+        const imagesPerPage = 4; // Change this value to the desired number of images per page
+
+        // Calculate the total number of pages
+        const totalPages = Math.ceil(data.length / imagesPerPage);
+
+        data.forEach((item, index) => {
+          if (index % imagesPerPage === 0) {
+            // Create a new page when needed
+            const pageNum = index / imagesPerPage + 1;
+            const pageLink = $(`<a href="#" data-page="${pageNum}">${pageNum}</a>`);
+            pageLink.appendTo('#pagination_container');
+          }
+
+          var card = $('<div class="card"></div>'); // Create a card container
+          var image = $('<img class="img">'); // Create an image element
+
+          image.attr("src", "data:image/jpeg;base64," + item.imageData); // Set image source
+          image.appendTo(card); // Append image to card
+
+          // Adding click event listener to each image for enlarging
+          image.on('click', function() {
+            $('#lightbox_img').attr('src', this.src);
+            $('#lightbox').fadeIn();
+            $('.overlay').fadeIn();
+            $('.download-button').fadeIn(); // Show download button
+          });
+
+          // Adding click event listener to download button
+          $('.download-button').on('click', function() {
+            downloadImage($('#lightbox_img').attr('src')); // Call downloadImage function with image source
+          });
+
+          card.appendTo(galleryContainer); // Append card to gallery container
+        });
+
+        // Add event listener for pagination
+        $('#pagination_container a').on('click', function(e) {
+          e.preventDefault();
+          const pageNum = parseInt($(this).attr('data-page'));
+          showPage(pageNum);
+        });
+
+        // Function to display the images for the selected page
+        function showPage(pageNum) {
+          galleryContainer.children('.card').hide(); // Hide all images
+          galleryContainer.children(`.card:nth-child(n+${(pageNum - 1) * imagesPerPage + 1}):nth-child(-n+${pageNum * imagesPerPage})`).show(); // Show images for the selected page
+        }
+
+        // Initially show the first page
+        showPage(1);
+      })
+      .catch(error => console.error('Error fetching images:', error));
+    } else {
+      // Handle case when token is not available
+      console.log('Token not available. Please login.');
+    }
+
+    // Function to get cookies
+    function getCookies() {
+      var cookies = {};
+      document.cookie.split(';').forEach(function(cookie) {
+        var parts = cookie.split('=');
+        cookies[parts.shift().trim()] = decodeURI(parts.join('='));
+      });
+      return cookies;
+    }
+
+    // Close lightbox when close button is clicked
+    $('#closeLightbox').on('click', function() {
+      $('#lightbox').fadeOut();
+      $('.overlay').fadeOut();
+      $('.download-button').fadeOut(); // Hide download button
+    });
+  </script>
+  <!-- footer section -->
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
+  </script>
+  <!-- owl carousel script -->
+  <script type="text/javascript">
+    $(".owl-carousel").owlCarousel({
+      loop: true,
+      margin: 0,
+      navText: [],
+      center: true,
+      autoplay: true,
+      autoplayHoverPause: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        1000: {
+          items: 3
+        }
+      }
+    });
+  </script>
+  <!-- end owl carousel script -->
+
+</body>
+
+</html>
