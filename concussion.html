@@ -18,7 +18,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width:300px;
             margin: 50px auto;
             padding: 20px;
             background-color: #ffffff;
@@ -168,8 +168,7 @@
                 .then(data => {
                     // Now 'data' contains the parsed JSON content
                     console.log(data);
-                    document.getElementById("display").innerHTML = "Survival Chance: " + ((1 - data[0]) * 100).toFixed(2) + "%.";
-                    document.getElementById("display2").innerHTML = "Deathrate: " + (data[0] * 100).toFixed(2) + "%.";
+                    document.getElementById("display").innerHTML = "Recovery Time: " + ((1 - data[0]) * 100).toFixed(2) + "%.";
                 })
                 .catch(error => {
                     // Handle errors here
