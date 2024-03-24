@@ -395,6 +395,8 @@
           console.log(data);
           document.getElementById("display").innerHTML = "Survival Chance: " + ((1-data[0]) * 100).toFixed(2) + "%.";
           document.getElementById("display2").innerHTML = "Deathrate: " + (data[0] * 100).toFixed(2) + "%.";
+          console.log(url);
+          console.log(authOptions);
         })
       .catch(error => {
           // Handle errors here

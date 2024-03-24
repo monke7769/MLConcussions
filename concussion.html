@@ -199,8 +199,14 @@
                 <option value="female">Female</option>
             </select>
 
-            <label for="weight">Weight (lbs):</label>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
+
+            <label for="weight">Height (cm):</label>
             <input type="number" id="weight" name="weight" required>
+
+            <label for="height">Weight (kg):</label>
+            <input type="number" id="height" name="height" required>
 
             <div class="checkbox-group">
                 <label for="smoke">Smoke:</label>
@@ -217,7 +223,7 @@
             <label for="exerciseHours">Exercise Hours:</label>
             <input type="number" id="exerciseHours" name="exerciseHours" step="0.01" required>
             
-            <label for="hitbox">Hitbox:</label>
+            <label for="hitbox">Size of impact object (kg):</label>
             <input type="number" id="hitbox" name="hitbox" step="0.01" required>
             
 
@@ -246,17 +252,19 @@
                 name: document.getElementById("name").value,
                 sex: document.getElementById("sex").value,
                // healTime: parseInt(document.getElementById("healTime").value),
-                weight: parseInt(document.getElementById("weight").value),
+                age: parseInt(document.getElementById("age").value), 
+                ht: parseFloat(document.getElementById("height").value),
+                wt: parseFloat(document.getElementById("weight").value),
                 smoke: smokeChecked,
                 alcohol: alcoholChecked,
-                sleepHours: parseInt(document.getElementById("sleepHours").value),
-                exerciseHours: parseInt(document.getElementById("exerciseHours").value),
-                hitbox: document.getElementById("hitbox").value
+                sleephrs: parseFloat(document.getElementById("sleepHours").value),
+                exercisehrs: parseFloat(document.getElementById("exerciseHours").value),
+                hitbox: parseFloat(document.getElementById("hitbox").value),
             };
 
             // Change options according to Authentication requirements
             const authOptions = {
-                mode: 'cors', // no-cors, *cors, same-origin
+                mode: 'no-cors', // no-cors, *cors, same-origin
                 credentials: 'include', // include, same-origin, omit
                 headers: {
                     'Content-Type': 'application/json',
@@ -269,22 +277,28 @@
 
             // Fetch JWT
             fetch(url, authOptions)
+            // console.log('hiii')
                 .then(response => {
+                    console.log('then1')
                     // Check if response is successful
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
+                    // if (!response.ok) {
+                    //    throw new Error('Network response was not ok');
+                    //}
                     // Parse the JSON content from the response
+                    console.log(response.json());
                     return response.json();
                 })
-                .then(data => {
+                .then(healtime => {
+                    console.log('then2')
                     // Now 'data' contains the parsed JSON content
-                    console.log(data);
-                    document.getElementById("display").innerHTML = "Recovery Time: " + ((1 - data[0]) * 100).toFixed(2) + "%.";
+                    console.log(healtime);
+                    document.getElementById("display").innerHTML = "Recovery Time: " + healtime.toFixed(2);
                 })
                 .catch(error => {
                     // Handle errors here
                     console.error('There was a problem with the fetch operation:', error);
+                    console.log(url);
+                    console.log(authOptions);
                 });
         
             const form = document.getElementById("concussionForm");
