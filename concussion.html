@@ -241,7 +241,7 @@
     <script>
      function login_user() {
         
-            const url = 'http://127.0.0.1:8086/api/titanic/'; // WE NEED TO CHANGE THIS URL WHEN WE MAKE THE API
+            const url = 'http://127.0.0.1:8086/api/concussion/'; // WE NEED TO CHANGE THIS URL WHEN WE MAKE THE API
 
             // Get checkbox values
             const smokeChecked = document.getElementById("smoke").checked ? 1 : 0;
@@ -264,7 +264,7 @@
 
             // Change options according to Authentication requirements
             const authOptions = {
-                mode: 'no-cors', // no-cors, *cors, same-origin
+                mode: 'cors', // no-cors, *cors, same-origin
                 credentials: 'include', // include, same-origin, omit
                 headers: {
                     'Content-Type': 'application/json',
@@ -281,17 +281,20 @@
                 .then(response => {
                     console.log('then1')
                     // Check if response is successful
-                    // if (!response.ok) {
-                    //    throw new Error('Network response was not ok');
-                    //}
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    } else {
+                        console.log('response is ok');
+                    }
                     // Parse the JSON content from the response
-                    console.log(response.json());
-                    return response.json();
+                    console.log(response);
+                    console.log('then1-after')
+                    return response;
                 })
-                .then(healtime => {
+                .then(data => {
                     console.log('then2')
                     // Now 'data' contains the parsed JSON content
-                    console.log(healtime);
+                    console.log(data);
                     document.getElementById("display").innerHTML = "Recovery Time: " + healtime.toFixed(2);
                 })
                 .catch(error => {
