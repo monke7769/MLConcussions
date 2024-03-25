@@ -28,7 +28,7 @@
             background-color: rgba(30, 30, 50, 0.9); /* Dark blue background color */
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1.0s ease;
+            animation: fadeIn 2.0s ease;
             flex-direction: column; /* Arrange children vertically */
             align-items: center; /* Center items horizontally */
             margin-top: 50px;
@@ -227,6 +227,8 @@
             <label for="hitbox">Size of impact object (kg):</label>
             <input type="number" id="hitbox" name="hitbox" step="0.01" required>
             
+            <label for="age">Days since injury:</label>
+            <input type="number" id="days" name="days" required>
 
             <button type="button" onclick="login_user()">Predict Recovery</button>
         </form>
@@ -245,7 +247,7 @@
     <script>
      function login_user() {
         
-            const url = 'http://127.0.0.1:8086/api/concussion/'; // WE NEED TO CHANGE THIS URL WHEN WE MAKE THE API
+            const url = 'http://127.0.0.1:8086/api/concussion/'; // WE CHANGED THE URL :D
 
             // Get checkbox values
             const smokeChecked = document.getElementById("smoke").checked ? 1 : 0;
@@ -264,6 +266,8 @@
                 sleephrs: parseFloat(document.getElementById("sleepHours").value),
                 exercisehrs: parseFloat(document.getElementById("exerciseHours").value),
                 hitbox: parseFloat(document.getElementById("hitbox").value),
+                days: parseFloat(document.getElementById("days").value),
+
             };
 
             // Change options according to Authentication requirements
@@ -299,7 +303,8 @@
                     console.log("now logging the returned data");
                     // Now 'data' contains the parsed JSON content
                     console.log(data);
-                    document.getElementById("displayyyy").innerHTML = "Estimated " + Math.round(data).toString() + " days until full recovery";
+                    d = parseFloat(document.getElementById("days").value),
+                    document.getElementById("displayyyy").innerHTML = "Estimated " + Math.round(data-d).toString() + " days left until full recovery";
                 })
                 .catch(error => {
                     // Handle errors here
