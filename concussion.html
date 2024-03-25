@@ -233,10 +233,13 @@
         <div id="overlay">
             <div id="result-container">
                 <div id="display"></div>
-                <div id="display2"></div>
                 <button onclick="hideOverlay()">Close</button>
             </div>
         </div>
+        <p id="displayyyy" style="color: white;">
+            Recovery Time: 
+            
+        </p>
     </div>
     <script>
      function login_user() {
@@ -289,13 +292,13 @@
                     // Parse the JSON content from the response
                     console.log(response);
                     console.log('then1-after')
-                    return response;
+                    return response.json();
                 })
                 .then(data => {
-                    console.log('then2')
+                    console.log("now logging the returned data");
                     // Now 'data' contains the parsed JSON content
                     console.log(data);
-                    document.getElementById("display").innerHTML = "Recovery Time: " + healtime.toFixed(2);
+                    document.getElementById("displayyyy").innerHTML = "Estimated " + Math.round(data).toString() + " days until full recovery";
                 })
                 .catch(error => {
                     // Handle errors here

@@ -379,6 +379,7 @@
           cache: 'no-cache', // Set the cache property
           body: JSON.stringify(body)
       };
+      console.log('Data:', body);
 
       // Fetch JWT
       fetch(url, authOptions)
@@ -392,6 +393,7 @@
       })
       .then(data => {
           // Now 'data' contains the parsed JSON content
+          console.log("now logging the returned data");
           console.log(data);
           document.getElementById("display").innerHTML = "Survival Chance: " + ((1-data[0]) * 100).toFixed(2) + "%.";
           document.getElementById("display2").innerHTML = "Deathrate: " + (data[0] * 100).toFixed(2) + "%.";
