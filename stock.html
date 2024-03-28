@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        input[type="number"] {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #prediction-result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stock Prediction Tool</h1>
+        <div id="stock-form">
+            <div class="form-group">
+                <label for="open">Open: Opening price of the stock for the day</label>
+                <input type="number" id="open"  required>
+            </div>
+            <div class="form-group">
+                <label for="high">High: Highest price of the stock for the day</label>
+                <input type="number" id="high" required>
+            </div>
+            <div class="form-group">
+                <label for="low">Low: Lowest price of the stock for the day</label>
+                <input type="number" id="low" required>
+            </div>
+            <div class="form-group">
+                <label for="close">Close: Closing price of the stock for the day</label>
+                <input type="number" id="close" required>
+            </div>
+            <div class="form-group">
+                <label for="volume">Volume: Number of shares traded during the day</label>
+                <input type="number" id="volume" required>
+            </div>
+            <button onclick="predictStock()">Predict</button>
+        </div>
+        <div id="prediction-result"></div>
+    </div>
+
+    <script>
+        function predictStock() {
+            var open = document.getElementById('open').value;
+            var high = document.getElementById('high').value;
+            var low = document.getElementById('low').value;
+            var close = document.getElementById('close').value;
+            var volume = document.getElementById('volume').value;
+            
+            var requestData = {
+                "Open": parseFloat(open),
+                "High": parseFloat(high),
+                "Low": parseFloat(low),
+                "Close": parseFloat(close),
+                "Volume": parseInt(volume)
+            };
+            
+            fetch('http://127.0.0.1:8032/api/stock/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('prediction-result').innerHTML = 
+                    'Probability of Increase: <span style="color: #007bff;">' + 
+                    data['probability of increase'] + '</span>';
+            })
+            .catch((error) => {
+                document.getElementById('prediction-result').innerText = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
