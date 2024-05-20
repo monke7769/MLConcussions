@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concussion Recovery Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #060636;
+            background-image: url('https://scitechdaily.com/images/Glowing-Brain-Particles.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: rgba(30, 30, 50, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 2.0s ease;
+            margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #fff;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #22269a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #09071a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Symptom Tracker Form</h2>
+        <form action="#" method="post">
+            <table>
+                <tr>
+                    <th>Symptom</th>
+                    <th>None</th>
+                    <th>Mild</th>
+                    <th>Moderate</th>
+                    <th>Severe</th>
+                </tr>
+                <tr>
+                    <td>Headache</td>
+                    <td><input type="radio" name="headache" value="none" checked></td>
+                    <td><input type="radio" name="headache" value="mild"></td>
+                    <td><input type="radio" name="headache" value="moderate"></td>
+                    <td><input type="radio" name="headache" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Neck Pain</td>
+                    <td><input type="radio" name="neck_pain" value="none" checked></td>
+                    <td><input type="radio" name="neck_pain" value="mild"></td>
+                    <td><input type="radio" name="neck_pain" value="moderate"></td>
+                    <td><input type="radio" name="neck_pain" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Nausea</td>
+                    <td><input type="radio" name="nausea" value="none" checked></td>
+                    <td><input type="radio" name="nausea" value="mild"></td>
+                    <td><input type="radio" name="nausea" value="moderate"></td>
+                    <td><input type="radio" name="nausea" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Dizziness</td>
+                    <td><input type="radio" name="dizziness" value="none" checked></td>
+                    <td><input type="radio" name="dizziness" value="mild"></td>
+                    <td><input type="radio" name="dizziness" value="moderate"></td>
+                    <td><input type="radio" name="dizziness" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Blurred Vision</td>
+                    <td><input type="radio" name="blurred_vision" value="none" checked></td>
+                    <td><input type="radio" name="blurred_vision" value="mild"></td>
+                    <td><input type="radio" name="blurred_vision" value="moderate"></td>
+                    <td><input type="radio" name="blurred_vision" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Sensitivity to Light</td>
+                    <td><input type="radio" name="sensitivity_to_light" value="none" checked></td>
+                    <td><input type="radio" name="sensitivity_to_light" value="mild"></td>
+                    <td><input type="radio" name="sensitivity_to_light" value="moderate"></td>
+                    <td><input type="radio" name="sensitivity_to_light" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Sensitivity to Noise</td>
+                    <td><input type="radio" name="sensitivity_to_noise" value="none" checked></td>
+                    <td><input type="radio" name="sensitivity_to_noise" value="mild"></td>
+                    <td><input type="radio" name="sensitivity_to_noise" value="moderate"></td>
+                    <td><input type="radio" name="sensitivity_to_noise" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Memory Loss</td>
+                    <td><input type="radio" name="memory_loss" value="none" checked></td>
+                    <td><input type="radio" name="memory_loss" value="mild"></td>
+                    <td><input type="radio" name="memory_loss" value="moderate"></td>
+                    <td><input type="radio" name="memory_loss" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Lack of Concentration</td>
+                    <td><input type="radio" name="lack_of_concentration" value="none" checked></td>
+                    <td><input type="radio" name="lack_of_concentration" value="mild"></td>
+                    <td><input type="radio" name="lack_of_concentration" value="moderate"></td>
+                    <td><input type="radio" name="lack_of_concentration" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Fatigue</td>
+                    <td><input type="radio" name="fatigue" value="none" checked></td>
+                    <td><input type="radio" name="fatigue" value="mild"></td>
+                    <td><input type="radio" name="fatigue" value="moderate"></td>
+                    <td><input type="radio" name="fatigue" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Confusion</td>
+                    <td><input type="radio" name="confusion" value="none" checked></td>
+                    <td><input type="radio" name="confusion" value="mild"></td>
+                    <td><input type="radio" name="confusion" value="moderate"></td>
+                    <td><input type="radio" name="confusion" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Drowsiness</td>
+                    <td><input type="radio" name="drowsiness" value="none" checked></td>
+                    <td><input type="radio" name="drowsiness" value="mild"></td>
+                    <td><input type="radio" name="drowsiness" value="moderate"></td>
+                    <td><input type="radio" name="drowsiness" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Trouble Falling Asleep</td>
+                    <td><input type="radio" name="trouble_falling_asleep" value="none" checked></td>
+                    <td><input type="radio" name="trouble_falling_asleep" value="mild"></td>
+                    <td><input type="radio" name="trouble_falling_asleep" value="moderate"></td>
+                    <td><input type="radio" name="trouble_falling_asleep" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Irritability</td>
+                    <td><input type="radio" name="irritability" value="none" checked></td>
+                    <td><input type="radio" name="irritability" value="mild"></td>
+                    <td><input type="radio" name="irritability" value="moderate"></td>
+                    <td><input type="radio" name="irritability" value="severe"></td>
+                </tr>
+                <tr>
+                    <td>Nervousness/Anxiety</td>
+                    <td><input type="radio" name="nervousness_anxiety" value="none" checked></td>
+                    <td><input type="radio" name="nervousness_anxiety" value="mild"></td>
+                    <td><input type="radio" name="nervousness_anxiety" value="moderate"></td>
+                    <td><input type="radio" name="nervousness_anxiety" value="severe"></td>
+                </tr>
+            </table>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
