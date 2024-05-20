@@ -185,6 +185,14 @@
         .shake {
             animation: shake 0.5s;
         }
+
+        .copy-paste-box {
+            display: none;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
     </style>
 </head>
 <body>
@@ -243,9 +251,13 @@
             Recovery Time: 
             
         </p>
+        <p id="suggestion" style="color: white;">
+
+        </p>"
     </div>
+    
     <script>
-     function login_user() {
+        function login_user() {
         
             const url = 'http://127.0.0.1:8086/api/concussion/'; // WE CHANGED THE URL :D
 
@@ -269,6 +281,12 @@
                 days: parseFloat(document.getElementById("days").value),
 
             };
+            const hitboxValue = parseFloat(document.getElementById("hitbox").value);
+            if (hitboxValue > 2) {
+                // Display a warning message using a flyout window
+                const warningMessage = "Warning: you probably died. Prediction results may be inaccurate.";
+                alert(warningMessage);
+            }
 
             // Change options according to Authentication requirements
             const authOptions = {
@@ -304,7 +322,22 @@
                     // Now 'data' contains the parsed JSON content
                     console.log(data);
                     d = parseFloat(document.getElementById("days").value),
-                    document.getElementById("displayyyy").innerHTML = "Estimated " + Math.round(data-d).toString() + " days left until full recovery";
+                    blarg = Math.round(data-d).toString();
+                    document.getElementById("displayyyy").innerHTML = "Estimated " + blarg + " days left until full recovery";
+                    if (blarg < 0) {
+                        document.getElementById("displayyyy").innerHTML = "You should have been healed by now!";
+                    };
+                    smok = document.getElementById("smoke").checked;
+                    alc = document.getElementById("alcohol").checked;
+                    if (smok == true) {
+                        document.getElementById("suggestion").innerHTML = "Suggestion: No smoking lil bro"
+                    }
+                    else if (alc == true) {
+                        document.getElementById("suggestion").innerHTML = "Suggestion: No drinking please, we don't want drunkards in the house"
+                    }
+                    else {
+                        document.getElementById("suggestion").innerHTML = "Suggestion: Eat more fish oil, get plenty of rest!"
+                    }
                 })
                 .catch(error => {
                     // Handle errors here
@@ -332,7 +365,6 @@
                         input.classList.remove("shake");
                     });
                 }, 500);
-
                 alert("Please fill out all required fields.");
             }
     }
