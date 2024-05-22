@@ -141,15 +141,96 @@
 
         // Function to submit quiz
         function submitQuiz() {
-            var result = document.getElementById('result');
-            result.innerHTML = '';
+        
+        const url = 'http://127.0.0.1:8086/api/concussion/'; // WE CHANGED THE URL :D
 
-            var answers = {};
-            var selects = document.querySelectorAll('select');
-            selects.forEach(function(select) {
-                answers[select.name] = select.value;
+        // Get checkbox values
+        const smokeChecked = document.getElementById("smoke").checked ? 1 : 0;
+        const alcoholChecked = document.getElementById("alcohol").checked ? 1 : 0;
+
+        // Set the body of the request to include login data from the DOM
+        const body = {
+            name: document.getElementById("name").value,
+            sex: document.getElementById("sex").value,
+           // healTime: parseInt(document.getElementById("healTime").value),
+            age: parseInt(document.getElementById("age").value), 
+            ht: parseFloat(document.getElementById("height").value),
+            wt: parseFloat(document.getElementById("weight").value),
+            smoke: smokeChecked,
+            alcohol: alcoholChecked,
+            sleephrs: parseFloat(document.getElementById("sleepHours").value),
+            exercisehrs: parseFloat(document.getElementById("exerciseHours").value),
+            hitbox: parseFloat(document.getElementById("hitbox").value),
+            days: parseFloat(document.getElementById("days").value),
+
+        };
+
+        // Change options according to Authentication requirements
+        const authOptions = {
+            mode: 'cors', // no-cors, *cors, same-origin
+            credentials: 'include', // include, same-origin, omit
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'POST', // Override the method property
+            cache: 'no-cache', // Set the cache property
+            body: JSON.stringify(body)
+        };
+        console.log('Data:', body);
+
+        // Fetch JWT
+        fetch(url, authOptions)
+        // console.log('hiii')
+            .then(response => {
+                console.log('then1')
+                // Check if response is successful
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                } else {
+                    console.log('response is ok');
+                }
+                // Parse the JSON content from the response
+                console.log(response);
+                console.log('then1-after')
+                return response.json();
+            })
+            .then(data => {
+                console.log("now logging the returned data");
+                // Now 'data' contains the parsed JSON content
+                console.log(data);
+                d = parseFloat(document.getElementById("days").value),
+                document.getElementById("displayyyy").innerHTML = "Estimated " + Math.round(data-d).toString() + " days left until full recovery";
+            })
+            .catch(error => {
+                // Handle errors here
+                console.error('There was a problem with the fetch operation:', error);
+                console.log(url);
+                console.log(authOptions);
             });
+    
+        const form = document.getElementById("concussionForm");
+        const inputs = form.querySelectorAll("input, select");
+        let allFilled = true;
 
+        inputs.forEach(input => {
+            if (input.hasAttribute("required") && !input.value) {
+                input.classList.add("shake");
+                allFilled = false;
+            } else {
+                input.classList.remove("shake");
+            }
+        });
+
+        if (!allFilled) {
+            setTimeout(() => {
+                inputs.forEach(input => {
+                    input.classList.remove("shake");
+                });
+            }, 500);
+
+            alert("Please fill out all required fields.");
+        }
+}
           //  result.innerHTML = '<h3>Results:</h3>' + JSON.stringify(answers);
          //   console.log(answers)
         }
