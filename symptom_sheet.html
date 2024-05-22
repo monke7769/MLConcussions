@@ -22,7 +22,7 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px; /* Adjusted width */
             padding: 20px;
             background-color: rgba(30, 30, 50, 0.9);
             border-radius: 10px;
@@ -48,20 +48,20 @@
             margin-bottom: 20px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+        label {
+            display: block;
+            margin-bottom: 10px;
             color: #fff;
         }
 
-        input[type="radio"] {
-            margin-right: 10px;
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #333;
+            font-size: 16px;
         }
 
         input[type="submit"] {
@@ -73,17 +73,27 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             margin-top: 20px;
+            display: block;
+            width: 100%;
+            text-align: center;
         }
 
         input[type="submit"]:hover {
             background-color: #09071a;
         }
+
+        #result {
+            margin-top: 20px;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
-    <h2>Quiz</h2>
-    <div id="quiz-form"></div>
-    <button onclick="submitQuiz()">Submit</button>
+    <div class="container">
+        <h2>Quiz</h2>
+        <div id="quiz-form"></div>
+        <button onclick="submitQuiz()">Submit</button>
+    </div>
     <div id="result"></div>
 
     <script>
@@ -103,9 +113,7 @@
             "Drowsiness": ["None", "Mild", "Moderate", "Severe"],
             "Insomnia": ["None", "Mild", "Moderate", "Severe"],
             "Irritability": ["None", "Mild", "Moderate", "Severe"],
-            "Nervousness/Anxiety": ["None", "Mild", "Moderate", "Severe"],
-
-
+            "Nervousness/Anxiety": ["None", "Mild", "Moderate", "Severe"]
         };
 
         // Function to generate quiz form
@@ -142,8 +150,8 @@
                 answers[select.name] = select.value;
             });
 
-            result.innerHTML = JSON.stringify(answers);
-            console.log(answers)
+          //  result.innerHTML = '<h3>Results:</h3>' + JSON.stringify(answers);
+         //   console.log(answers)
         }
 
         // Generate quiz form when the page loads
