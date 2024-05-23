@@ -15,14 +15,14 @@
             background-repeat: no-repeat;
             margin: 0;
             padding: 0;
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
         }
 
         .container {
-            max-width: 800px; /* Adjusted width */
+            width: 1000px;
             padding: 20px;
             background-color: rgba(30, 30, 50, 0.9);
             border-radius: 10px;
@@ -45,7 +45,23 @@
         h2 {
             color: #fff;
             text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            color: #93f299;
+            text-align: left;
             margin-bottom: 20px;
+        }
+
+        .columns {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .column {
+            flex: 1;
         }
 
         label {
@@ -62,6 +78,7 @@
             background-color: #fff;
             color: #333;
             font-size: 16px;
+            margin-bottom: 10px;
         }
 
         input[type="submit"] {
@@ -90,8 +107,19 @@
 </head>
 <body>
     <div class="container">
-        <h2>Quiz</h2>
-        <div id="quiz-form"></div>
+        <h2>Recovery Recommendations</h2>
+        <h3>Please indicate your symptom severities here!</h3>
+        <div class="columns">
+            <div class="column">
+                <div id="column1"></div>
+            </div>
+            <div class="column">
+                <div id="column2"></div>
+            </div>
+            <div class="column">
+                <div id="column3"></div>
+            </div>
+        </div>
         <button onclick="submitQuiz()">Submit</button>
     </div>
     <div id="result"></div>
@@ -118,12 +146,16 @@
 
         // Function to generate quiz form
         function generateQuizForm() {
-            var quizForm = document.getElementById('quiz-form');
+            var column1 = document.getElementById('column1');
+            var column2 = document.getElementById('column2');
+            var column3 = document.getElementById('column3');
+            
+            var thirdLength = 5;
+            var count = 0;
 
             for (var question in questions) {
                 var label = document.createElement('label');
                 label.innerHTML = question;
-                quizForm.appendChild(label);
 
                 var select = document.createElement('select');
                 select.name = question;
@@ -135,104 +167,32 @@
                     select.appendChild(option);
                 }
 
-                quizForm.appendChild(select);
+                if (count < thirdLength) {
+                    column1.appendChild(label);
+                    column1.appendChild(select);
+                } else if (count < 2*thirdLength) {
+                    column2.appendChild(label);
+                    column2.appendChild(select);
+                } else {
+                    column3.appendChild(label);
+                    column3.appendChild(select);
+                }
+
+                count++;
             }
         }
 
         // Function to submit quiz
         function submitQuiz() {
-        
-        const url = 'http://127.0.0.1:8086/api/concussion/'; // WE CHANGED THE URL :D
 
-        // Get checkbox values
-        const smokeChecked = document.getElementById("smoke").checked ? 1 : 0;
-        const alcoholChecked = document.getElementById("alcohol").checked ? 1 : 0;
-
-        // Set the body of the request to include login data from the DOM
-        const body = {
-            name: document.getElementById("name").value,
-            sex: document.getElementById("sex").value,
-           // healTime: parseInt(document.getElementById("healTime").value),
-            age: parseInt(document.getElementById("age").value), 
-            ht: parseFloat(document.getElementById("height").value),
-            wt: parseFloat(document.getElementById("weight").value),
-            smoke: smokeChecked,
-            alcohol: alcoholChecked,
-            sleephrs: parseFloat(document.getElementById("sleepHours").value),
-            exercisehrs: parseFloat(document.getElementById("exerciseHours").value),
-            hitbox: parseFloat(document.getElementById("hitbox").value),
-            days: parseFloat(document.getElementById("days").value),
-
-        };
-
-        // Change options according to Authentication requirements
-        const authOptions = {
-            mode: 'cors', // no-cors, *cors, same-origin
-            credentials: 'include', // include, same-origin, omit
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            method: 'POST', // Override the method property
-            cache: 'no-cache', // Set the cache property
-            body: JSON.stringify(body)
-        };
-        console.log('Data:', body);
-
-        // Fetch JWT
-        fetch(url, authOptions)
-        // console.log('hiii')
-            .then(response => {
-                console.log('then1')
-                // Check if response is successful
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                } else {
-                    console.log('response is ok');
-                }
-                // Parse the JSON content from the response
-                console.log(response);
-                console.log('then1-after')
-                return response.json();
-            })
-            .then(data => {
-                console.log("now logging the returned data");
-                // Now 'data' contains the parsed JSON content
-                console.log(data);
-                d = parseFloat(document.getElementById("days").value),
-                document.getElementById("displayyyy").innerHTML = "Estimated " + Math.round(data-d).toString() + " days left until full recovery";
-            })
-            .catch(error => {
-                // Handle errors here
-                console.error('There was a problem with the fetch operation:', error);
-                console.log(url);
-                console.log(authOptions);
+            var answers = {};
+            var selects = document.querySelectorAll('select');
+            selects.forEach(function(select) {
+                answers[select.name] = select.value;
             });
-    
-        const form = document.getElementById("concussionForm");
-        const inputs = form.querySelectorAll("input, select");
-        let allFilled = true;
 
-        inputs.forEach(input => {
-            if (input.hasAttribute("required") && !input.value) {
-                input.classList.add("shake");
-                allFilled = false;
-            } else {
-                input.classList.remove("shake");
-            }
-        });
-
-        if (!allFilled) {
-            setTimeout(() => {
-                inputs.forEach(input => {
-                    input.classList.remove("shake");
-                });
-            }, 500);
-
-            alert("Please fill out all required fields.");
-        }
-}
-          //  result.innerHTML = '<h3>Results:</h3>' + JSON.stringify(answers);
-         //   console.log(answers)
+            console.log(answers);
+            // answers is now in JSON format!! now need to do api stuff
         }
 
         // Generate quiz form when the page loads
