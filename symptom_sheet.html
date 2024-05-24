@@ -120,7 +120,7 @@
                 <div id="column3"></div>
             </div>
         </div>
-        <button onclick="submitQuiz()">Submit</button>
+        <button onclick="login_user()">Submit</button>
     </div>
     <div id="result"></div>
 
@@ -183,16 +183,55 @@
         }
 
         // Function to submit quiz
-        function submitQuiz() {
+        function login_user() {
 
-            var answers = {};
+            var body = {};
             var selects = document.querySelectorAll('select');
             selects.forEach(function(select) {
-                answers[select.name] = select.value;
+                body[select.name] = select.value;
             });
 
-            console.log(answers);
+            console.log(body);
             // answers is now in JSON format!! now need to do api stuff
+            const url = 'http://127.0.0.1:8086/api/recovery/'; // WE CHANGED THE URL :D
+            // Change options according to Authentication requirements
+            const authOptions = {
+                mode: 'cors', // no-cors, *cors, same-origin
+                credentials: 'include', // include, same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST', // Override the method property
+                cache: 'no-cache', // Set the cache property
+                body: JSON.stringify(body)
+            };
+
+            fetch(url, authOptions)
+            // console.log('hiii')
+                .then(response => {
+                    console.log('then1')
+                    // Check if response is successful
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    } else {
+                        console.log('response is ok');
+                    }
+                    // Parse the JSON content from the response
+                    console.log(response);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("now logging the returned data");
+                    // Now 'data' contains the parsed JSON content
+                    console.log(data);
+                    // document.getElementById("suggestion").innerHTML = "Suggestion: No smoking lil bro"
+                })
+                .catch(error => {
+                    // Handle errors here
+                    console.error('There was a problem with the fetch operation:', error);
+                    console.log(url);
+                    console.log(authOptions);
+                });
         }
 
         // Generate quiz form when the page loads
