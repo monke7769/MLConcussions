@@ -184,7 +184,6 @@
 
         // Function to submit quiz
         function login_user() {
-
             var body = {};
             var selects = document.querySelectorAll('select');
             selects.forEach(function(select) {
@@ -192,8 +191,8 @@
             });
 
             console.log(body);
-            // answers is now in JSON format!! now need to do api stuff
-            const url = 'http://127.0.0.1:8086/api/recovery/'; // WE CHANGED THE URL :D
+            // answers are now in JSON format!! now need to do api stuff
+            const url = 'http://127.0.0.1:8086/api/recovery/'; // Update the URL to match your API endpoint
             // Change options according to Authentication requirements
             const authOptions = {
                 mode: 'cors', // no-cors, *cors, same-origin
@@ -207,31 +206,49 @@
             };
 
             fetch(url, authOptions)
-            // console.log('hiii')
                 .then(response => {
-                    console.log('then1')
                     // Check if response is successful
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
-                    } else {
-                        console.log('response is ok');
                     }
                     // Parse the JSON content from the response
-                    console.log(response);
                     return response.json();
                 })
                 .then(data => {
-                    console.log("now logging the returned data");
                     // Now 'data' contains the parsed JSON content
                     console.log(data);
-                    // document.getElementById("suggestion").innerHTML = "Suggestion: No smoking lil bro"
+                    displayResult(data); // Call the function to display the result
                 })
                 .catch(error => {
                     // Handle errors here
                     console.error('There was a problem with the fetch operation:', error);
-                    console.log(url);
-                    console.log(authOptions);
                 });
+        }
+
+        // Function to display the result
+        function displayResult(data) {
+            var resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = ''; // Clear previous results
+            
+            // Display the total score
+            var totalScore = document.createElement('p');
+            totalScore.innerHTML = '<strong>Total Score:</strong> ' + data[0];
+            resultDiv.appendChild(totalScore);
+
+            // Display the recommendations
+            if (data[1].length > 0) {
+                var recommendations = document.createElement('ul');
+                data[1].forEach(function(rec) {
+                    var listItem = document.createElement('li');
+                    listItem.innerHTML = rec;
+                    recommendations.appendChild(listItem);
+                });
+                resultDiv.appendChild(recommendations);
+            } else {
+                var noRecommendations = document.createElement('p');
+                noRecommendations.innerHTML = 'No specific recommendations.';
+                resultDiv.appendChild(noRecommendations);
+            }
         }
 
         // Generate quiz form when the page loads
